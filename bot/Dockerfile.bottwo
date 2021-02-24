@@ -2,7 +2,7 @@ FROM node:12-alpine as build
 
 WORKDIR /usr/local/bottwo
 
-COPY bot/dist/bot2 bot/package.json bot/.env ./
+COPY dist/bot2 bot/package.json bot/.env ./
 
 RUN npm install --production
 
