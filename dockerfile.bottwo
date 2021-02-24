@@ -1,0 +1,15 @@
+FROM node:12-alpine as build
+
+WORKDIR /usr/local/bottwo
+
+COPY dist/bot2 bot/package.json bot/.env ./
+
+RUN npm install --production
+
+FROM node:12-alpine
+
+WORKDIR /usr/local/bottwo
+
+COPY --from=build /usr/local/bottwo .
+
+CMD ["node", "index.js"]

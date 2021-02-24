@@ -1,0 +1,15 @@
+FROM node:12-alpine as build
+
+WORKDIR /usr/local/botthree
+
+COPY dist/bot3 bot/package.json bot/.env ./
+
+RUN npm install --production
+
+FROM node:12-alpine
+
+WORKDIR /usr/local/botthree
+
+COPY --from=build /usr/local/botthree .
+
+CMD ["node", "index.js"]

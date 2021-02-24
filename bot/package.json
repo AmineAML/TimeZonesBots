@@ -1,0 +1,35 @@
+{
+  "name": "bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "tsc -p tsconfig.production.json",
+    "dev:botone": "nodemon --watch src/bot1 --exec ts-node src/bot1/index.ts",
+    "dev:bottwo": "nodemon --watch src/bot2 --exec ts-node src/bot2/index.ts",
+    "dev:botthree": "nodemon --watch src/bot3 --exec ts-node src/bot3/index.ts",
+    "dev:botfour": "nodemon --watch src/bot4 --exec ts-node src/bot4/index.ts",
+    "start:botone": "node dist/bot1/index.js",
+    "start:bottwo": "node dist/bot2/index.js",
+    "start:botthree": "node dist/bot3/index.js",
+    "start:botfour": "node dist/bot4/index.js",
+    "dev:all": "start cmd.exe @cmd /k npm run dev:botone && start cmd.exe @cmd /k npm run dev:bottwo && start cmd.exe @cmd /k npm run dev:botthree && start cmd.exe @cmd /k npm run dev:botfour"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@typeit/discord": "^4.0.9",
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
+    "tslib": "^2.1.0",
+    "typescript": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.31",
+    "@types/ws": "^7.4.0",
+    "nodemon": "^2.0.7",
+    "ts-node": "^9.1.1"
+  }
+}

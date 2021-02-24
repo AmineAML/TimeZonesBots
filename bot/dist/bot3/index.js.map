@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"/","sources":["bot3/index.ts"],"names":[],"mappings":";;AAAA,+BAAwC;AAExC,CAAC;AAAA,CAAC,KAAK,IAAI,EAAE;IACT,qBAAe,EAAE,CAAA;AACrB,CAAC,CAAC,EAAE,CAAA","sourcesContent":["import { startDiscordApp } from './bot';\r\n\r\n;(async () => {\r\n    startDiscordApp()\r\n})()"]}

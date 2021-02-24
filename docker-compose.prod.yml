@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  botone:
+    image: "botone:prod"
+    build:
+      dockerfile: "Dockerfile.botone"
+    restart: "on-failure"
+
+  bottwo:
+    image: "bottwo:prod"
+    build:
+      dockerfile: "Dockerfile.bottwo"
+    restart: "on-failure"
+
+  botthree:
+    image: "botthree:prod"
+    build:
+      dockerfile: "Dockerfile.botthree"
+    restart: "on-failure"
+
+  botfour:
+    image: "botfour:prod"
+    build:
+      dockerfile: "Dockerfile.botfour"
+    restart: "on-failure"

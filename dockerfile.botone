@@ -1,0 +1,15 @@
+FROM node:12-alpine as build
+
+WORKDIR /usr/local/botone
+
+COPY dist/bot1 bot/package.json bot/.env ./
+
+RUN npm install --production
+
+FROM node:12-alpine
+
+WORKDIR /usr/local/botone
+
+COPY --from=build /usr/local/botone .
+
+CMD ["node", "index.js"]
