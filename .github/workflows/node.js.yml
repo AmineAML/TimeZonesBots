@@ -1,0 +1,74 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+      
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: |
+        cd bot
+        npm install
+    - run: npm run prod:build
+    - name: bot/dist
+      uses: actions/upload-artifact@v2
+      with:
+        name: bots
+        path: bot/dist
+  
+  deploy:
+    needs: 
+      - build
+    runs-on: self-hosted
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Create env file
+      run: |
+        cd bot
+        touch .env
+        echo DISCORD_BOT_TOKEN_UK_LONDEN=${{ secrets.DISCORD_BOT_TOKEN_UK_LONDEN }} >> .env
+        echo DISCORD_BOT_TOKEN_US_WEST=${{ secrets.DISCORD_BOT_TOKEN_US_WEST }} >> .env
+        echo DISCORD_BOT_TOKEN_US_EAST=${{ secrets.DISCORD_BOT_TOKEN_US_EAST }} >> .env
+        echo DISCORD_BOT_TOKEN_AU_SYDNEY=${{ secrets.DISCORD_BOT_TOKEN_AU_SYDNEY }} >> .env
+        cat .env
+    - run: npm run docker:down
+    - run: docker image prune -a -f
+    - run: |
+        cd bot
+        mkdir dist
+    - name: Download dist from build
+      uses: actions/download-artifact@v2
+      with:
+        name: bots
+        path: bot/dist
+    - run: npm run prod
+    - run: docker image prune -a -f
