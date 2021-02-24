@@ -4,23 +4,27 @@ services:
   botone:
     image: "botone:prod"
     build:
+      context: "./bot"
       dockerfile: "Dockerfile.botone"
     restart: "on-failure"
 
   bottwo:
     image: "bottwo:prod"
     build:
+      context: "./bot"
       dockerfile: "Dockerfile.bottwo"
     restart: "on-failure"
 
   botthree:
     image: "botthree:prod"
     build:
+      context: "./bot"
       dockerfile: "Dockerfile.botthree"
     restart: "on-failure"
 
   botfour:
     image: "botfour:prod"
     build:
+      context: "./bot"
       dockerfile: "Dockerfile.botfour"
     restart: "on-failure"
